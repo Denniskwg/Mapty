@@ -1,0 +1,44 @@
+import { Container, Button, Row, Col} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import './App.css';
+
+
+function DashBoard () {
+  return (
+    <Container fluid className="dashboard">
+      <ul className="routes list-group">
+        <li className="workout workout--cycling" data-id="1234567891">
+	  <div className="workout__title">
+	    <h5>Cycling</h5>
+	    <span className="workout__icon">🚴‍♀️</span>
+	  </div>
+	  <Col className="workout__details">
+	    <span className="workout__value">Distance:</span>
+	    <span className="workout__value">27</span>
+	    <span className="workout__unit">km</span>
+	  </Col>
+	   <Col className="workout__details">
+	      <span className="workout__icon">⛰</span>
+	     <span className="workout__value">Distance due:</span>
+	     <span className="workout__value">27</span>
+	     <span className="workout__unit">km</span>
+	    </Col>
+	    <Col className="workout__details">
+	      <span className="workout__icon">⚡️</span>
+	      <span className="workout__value">Estimated calorie loss:</span>
+	      <span className="workout__value">16</span>
+	      <span className="workout__unit">calories</span>
+	    </Col>
+	    <Col className="workout__details">
+	     <span className="workout__icon">⏱</span>
+	      <span className="workout__value">Best time:</span>
+	      <span className="workout__value">30</span>
+	      <span className="workout__unit">m</span>
+	    </Col>
+	  </li>
+      </ul>
+    </Container>
+  );
+};
+
+export default DashBoard;

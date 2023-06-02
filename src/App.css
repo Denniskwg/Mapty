@@ -1,38 +1,176 @@
-.App {
-  text-align: center;
+:root {
+	--color-brand--1: #ffb545;
+	--color-brand--2: #00c46a;
+
+	--color-dark--1: #2d3439;
+	--color-dark--2: #42484d;
+	--color-light--1: #aaa;
+	--color-light--2: #ececec;
+	--color-light--3: rgb(214, 222, 224);
+}
+.custom-container {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	padding: 0;
+	margin: 0;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+	height: 40vmin;
+	pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
 }
 
 .App-link {
-  color: #61dafb;
+	color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-bar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding-right: 1.5rem;
+	#background-color: #C0C0C0;
+}
+.nav-name:hover {
+	cursor: pointer;
+}
+.nav-list {
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	font-weight: 500;
+	font-size: 0.86rem;
+}
+.nav-list > li:hover {
+	cursor: pointer;
+}
+.logo {
+	height: 3rem;
+	margin: 0;
+	#align-self: center;
+	#margin-bottom: 4rem;
+ }
+.ml-auto {
+	margin-left: auto;
+	margin-right: 1rem;
+}
+.dashboard {
+	background-color: #F5F5F5;
+	overflow-y: scroll;
+	overflow-x: scroll;
+	height: 400px;
+	margin-top: 0.5rem;
+	padding: 1.5rem;
+}
+.btn-submit {
+	background-color: red;
+}
+.name {
+	color: #17A2B8;
+	font-size: 1rem;
+}
+.typography {
+	padding: 0.5rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+}
+.text {
+	color: #0d6efd;
+	font-size: 2rem;
+}
+.image1 {
+	width: 5rem;
+	height: 5rem;
+	content: url("./running1.png");
+}
+.image2 {
+	width: 5rem;
+	height: 5rem;
+	content: url("./running2.png");
+}
+.image3 {
+	width: 5rem;
+	height: 5rem;
+	content: url("./bicycle1.png");
+	#margin-left: 2.5rem;
+}
+.image4 {
+	 width: 5rem;
+	 height: 5rem;
+	 content: url("./bicycle2.png");
+}
+.images {
+	display: flex;
+	flex-direction: row;
+	#gap: 1rem;
+}
+.routes {
+	list-style-type: none;
+	height: 100%;
+	#overflow-y: scroll;
+	#overflow-x: scroll;
+}
+.div-3 {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+.calories {
+	margin-left: 0.5rem;
+}
+.workout {
+	#background-color: var(--color-dark--2);
+	border-radius: 0.39rem;
+	#padding-left: 1.5rem;
+	#padding-right: 1rem;
+	#margin-bottom: 1.75rem;
+	padding: 0.5rem;
+	#border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+	display: flex;
+	#align-items: center;
+	#flex-direction: row;
+	align-items: baseline;
+	#display: grid;
+	#grid-template-columns: 4rem 4rem 4rem 4rem;
+	#gap: 1rem;
+}
+.workout--cycling {
+	border-left: 5px solid var(--color-brand--1);
+}
+.workout--running {
+	border-left: 5px solid var(--color-brand--2);
+}
+.form-group {
+	margin-bottom: 1rem;
+}
+.form--1 {
+	margin-top: 1rem;
+}
+.workout:hover {
+	background-color: rgba(0, 0, 0, 0.2);
 }
