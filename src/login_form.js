@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {NavBar} from './App';
 import { useNavigate } from 'react-router-dom';
+import { Container, Button, Row, Col} from 'react-bootstrap';
 
 function LoginForm(props) {
   const [username, setUsername] = useState('');
@@ -62,8 +63,9 @@ function LoginForm(props) {
   };
 
   return (
-    <div className="container form--1">
+    <div className="custom-container">
       <NavBar/>
+      <Container className="container form--1" xs={12} md={6}>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="user_name">Username</label>
@@ -83,6 +85,7 @@ function LoginForm(props) {
 	</div>
         <button type="submit" className="btn btn-primary">Login</button>
       </form>
+      </Container>
     </div>
   );
 };

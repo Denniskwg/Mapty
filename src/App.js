@@ -8,28 +8,27 @@ import Form from './form';
 import LoginForm from './login_form';
 import SignupForm from './signup_form';
 import Map from './Map';
-import UserMap from './loggedMap';
 import Demo from './demo';
 import UserView from './userview';
 
 
 function NavBar (props) {
+
   return (
-    <div>
-    <Navbar expand="lg" className="nav-bar navbar-expand-lg navbar-light">
-      <div onClick={props.showForm} style={{ fontSize: "1.8rem", marginLeft: "0.5rem", letterSpacing: "0.1rem" }} className='nav-name'>
+    <Navbar className="navbar navbar-expand-lg navbar-light bg-light .navbar-expand{-sm|-md|-lg|-xl}">
+      <div style={{ fontSize: "1.8rem", marginLeft: "0.5rem", letterSpacing: "0.1rem" }} className='nav-name'>
 	  <Link style={{textDecoration: 'none', color: 'black'}} to={'/'}><p>mapty</p></Link>
       </div>
-      <Navbar.Collapse id="basic-navbar-nav">
-        <div style={{'marginLeft': 'auto', 'marginRight': '1rem'}}>
-	  <ul className='nav-list'>
-	    <li><Link to={'/login'}>Login</Link></li>
-	    <li><Link to={'/signup'}>Signup</Link></li>
-	  </ul>
-	</div>
-      </Navbar.Collapse>
+      <Button style={{ marginRight: "0.5rem"}} className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span className="navbar-toggler-icon"></span>
+      </Button>
+      <div className="collapse navbar-collapse" id="navbarNav" style={{ marginLeft: "0.5rem"}}>
+	<ul className='nav-list navbar-nav ml-auto'>
+	  <li className='nav-item active'><Link to={'/login'}>Login</Link></li>
+	  <li className='nav-item'><Link to={'/signup'}>Signup</Link></li>
+	</ul>
+      </div>
     </Navbar>
-    </div>
   );
 }
 
