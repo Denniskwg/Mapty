@@ -1,50 +1,35 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import Map from './Map';
 import DashBoard from './dashboard';
 import InputForm from './input_form';
+import { useNavigate } from 'react-router-dom';
 
 
 function Form (props) {
-  const [selectedOption, setSelectedOption] = useState('cycling');
-  const [weight, setWeight] = useState('');
-  const [speed, setSpeed] = useState('4');
-  const [showComponent, setShowComponent] = useState(false);
-  const [color, setColor] = useState({border: '1px solid #dee2e6'})
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
+  const [id, setId] = useState('');
+  const [color, setColor] = useState({border: '1px solid #dee2e6'});
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(selectedOption);
-    console.log(weight);
-    if (weight) {
-      props.submit(true);
-      props.hide();
-      props.handledashboard(false);
+    if (props.weight && props.speed) {
+      localStorage.setItem('type', JSON.stringify(props.option));
+      localStorage.setItem('user_mode', JSON.stringify(false));
+      navigate('/map');
     } else {
       setColor({border: '1px solid red'})
-      console.log(InputForm);
     }
   };
 
-  const handleWeightChange = (event) => {
-    setWeight(event.target.value);
-  };
 
-  function handleClick() {
-    setShowComponent(true);
-    console.log("clicked");
-    console.log(showComponent);
+  function handleClick(event) {
+    const elementId = event.currentTarget.getAttribute('data-id');
+    setId(elementId);
   };
 
   return (
     <>
-    {showComponent && props.submitted && <Map/>}
-    {!props.hidedashboard && <DashBoard click={handleClick} option={selectedOption}/>}
-    {!props.submitted && <InputForm speed={speed} submit={handleSubmit} weight={weight} handleWeight={handleWeightChange} option={selectedOption} handleOption={handleOptionChange} color={color}/>}
+      <InputForm speed={props.speed} submit={handleSubmit} weight={props.weight}  option={props.option} color={color} change={props.change}/>
     </>
   );
 };
