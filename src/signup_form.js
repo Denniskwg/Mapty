@@ -32,7 +32,7 @@ function SignupForm(props) {
   }
 
   const signup = async ()=> {
-    const response = await axios.post("http://localhost:8000/v1/signup/", {
+    const response = await axios.post("https//mapty.denniswaruhiu.tech/v1/signup/", {
       first_name: data.first_name,
       last_name: data.last_name,
       user_name: data.user_name,

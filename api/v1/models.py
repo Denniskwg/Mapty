@@ -22,25 +22,23 @@ class BaseModel(models.Model):
         abstract = True
 
 class User(BaseModel):
-    email = models.CharField(max_length=60)
-    first_name = models.CharField(max_length=60)
-    last_name = models.CharField(max_length=60)
-    password = models.CharField(max_length=60)
-    user_name = models.CharField(max_length=60)
+    email = models.CharField(max_length=60, null=False, blank=False)
+    first_name = models.CharField(max_length=60, null=False, blank=False)
+    last_name = models.CharField(max_length=60, null=False, blank=False)
+    password = models.CharField(max_length=60, null=False, blank=False)
+    user_name = models.CharField(max_length=60, null=False, blank=False)
     objects = CustomUserManager()
 
 class Workout(BaseModel):
-    type = models.CharField(max_length=60)
     coords_start = PointField()
     coords_end = PointField()
-    name = models.CharField(max_length=60)
-    speed = models.PositiveIntegerField()
-    date = models.DateField()
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id', related_name='workouts')
+    type = models.CharField(max_length=60, null=False, blank=False)
+    name = models.CharField(max_length=60, null=False, blank=False)
+    date = models.DateField(null=False, blank=False)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, to_field='id', related_name='workouts', null=False, blank=False)
 
 class Demo(BaseModel):
-    type = models.CharField(max_length=60)
+    type = models.CharField(max_length=60, null=False, blank=False)
     coords_start = PointField()
     coords_end = PointField()
-    name = models.CharField(max_length=60)
-    speed = models.PositiveIntegerField()
+    name = models.CharField(max_length=60, null=False, blank=False)

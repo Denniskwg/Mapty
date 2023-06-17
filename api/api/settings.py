@@ -25,8 +25,16 @@ SECRET_KEY = 'django-insecure-c-zmq^+62fj!846oc9cf#(*k)l^-=#4^2wa+ycqp=id5o^nd@k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mapty.denniswaruhiu.tech']
+SSL_CERTIFICATE = '/etc/letsencrypt/live/mapty.denniswaruhiu.tech/fullchain.pem' # managed by Certbot
+SSL_PRIVATE_KEY = '/etc/letsencrypt/live/mapty.denniswaruhiu.tech/privkey.pem' # managed by Certbot
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+SSL_REDIRECT = True
 
 # Application definition
 
@@ -40,9 +48,12 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'rest_framework',
     'v1',
+    'corsheaders',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +61,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'https://mapty.denniswaruhiu.tech',
 ]
 
 ROOT_URLCONF = 'api.urls'

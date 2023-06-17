@@ -59,6 +59,7 @@ function Map(props) {
   };
 
   function error(err){
+    console.log(err);
     alert("Couldn't get your location");
   };
 
@@ -116,13 +117,14 @@ function Map(props) {
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
-      const response = await axios.post("http://localhost:8000/v1/workouts/", {
+      const id = JSON.parse(localStorage.getItem('id'));
+      const response = await axios.post("https://mapty.denniswaruhiu.tech/v1/workouts/", {
         name: formData.name,
 	type: formData.type,
 	coords_start: position[0],
 	coords_end: position[1],
 	date: formattedDate,
-	user_id: props.id,
+	user_id: id,
 	});
 
       console.log(response.data);

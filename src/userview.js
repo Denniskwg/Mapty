@@ -18,7 +18,7 @@ function UserView(props) {
     try {
       const id = localStorage.getItem('id');
       console.log(id);
-      const response = await fetch(`http://127.0.0.1:8000/v1/user_workouts/${JSON.parse(id)}/`);
+      const response = await fetch(`https://mapty.denniswaruhiu.tech/v1/user_workouts/${JSON.parse(id)}/`);
       const jsonData = await response.json();
       setWorkouts(jsonData);
     } catch (error) {
