@@ -28,6 +28,7 @@ function UserView(props) {
   };
 
   function handleClick(e) {
+    if (e.currentTarget.getAttribute('data-id')) {
     const id = e.currentTarget.getAttribute('data-id');
     console.log(id);
     setId(id);
@@ -36,6 +37,7 @@ function UserView(props) {
     const start = item.coords_start;
     const end = item.coords_end;
     setPosition([start, end]);
+    }
   }
 
   const weight = JSON.parse(localStorage.getItem('weight'));

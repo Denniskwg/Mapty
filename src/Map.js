@@ -50,6 +50,7 @@ function Map(props) {
     if (navigator.geolocation && props.create){
       navigator.geolocation.getCurrentPosition(success, error);
     }
+    setPosition(props.position);
     if (navigator.geolocation && props.start) {
       setInterval (()=>{
         navigator.geolocation.getCurrentPosition(success2, error);
@@ -59,7 +60,6 @@ function Map(props) {
 	setDistanceRemaining(dist);
       }, 1000);
     }
-    setPosition(props.position);
     setMapKey((prevKey) => prevKey + 1);
   }, [props.position, props.create, props.start, position]);
 

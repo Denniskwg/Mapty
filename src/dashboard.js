@@ -5,13 +5,17 @@ import L from 'leaflet';
 
 
 function Running(props) {
+  function click() {
+    props.setStart(true)
+  }
+
   return (
     <Row xs={12} md={6} className="workout" data-id={props.id} onClick={props.click} style={{borderLeft: props.type === 'running'?props.style.running:props.style.cycling}}>
       <div className="name">{props.name}</div>
       <p style={{'margin': '0'}}><b>{props.distance} km</b></p>
       <div className="div-3"><p style={{'margin': '0'}}><b>Calorie loss:</b></p><span className="calories">{props.calories} cal</span></div>
       {props.mode && <div className="div-3"><p><b>date: </b></p><span className="calories">{props.date}</span></div>}
-      <button onClick={()=>props.setStart(true)} style={{backgroundColor: props.type === 'running' ? '#00c46a' :  '#ffb545', border: 'none'}}type="submit" className="btn btn-primary">start</button>
+      <button onClick={click} style={{backgroundColor: props.type === 'running' ? '#00c46a' :  '#ffb545', border: 'none'}}type="submit" className="btn btn-primary">start</button>
     </Row>
   );
 };
