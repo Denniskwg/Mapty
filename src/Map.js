@@ -36,6 +36,7 @@ function Map(props) {
 	      });
 
   const [showForm, setShowForm] = useState(false);
+  const [distanceRemaining, setDistanceRemaining] = useState(0);
 
   function handleChange(e) {
     const { id, value } = e.target;
@@ -49,9 +50,25 @@ function Map(props) {
     if (navigator.geolocation && props.create){
       navigator.geolocation.getCurrentPosition(success, error);
     }
+    if (navigator.geolocation && props.start) {
+      setInterval (()=>{
+        navigator.geolocation.getCurrentPosition(success2, error);
+	const start = position[0];
+	const end = position[1];
+	const dist = distance(start[0], start[1], end[0], end[1]);
+	setDistanceRemaining(dist);
+      }, 1000);
+    }
     setPosition(props.position);
     setMapKey((prevKey) => prevKey + 1);
-  }, [props.position, props.create]);
+  }, [props.position, props.create, props.start, position]);
+
+  function success2 (pos) {
+    const { latitude, longitude } = pos.coords;
+    const start = [latitude, longitude];
+    const end = position[1];
+    setPosition([start, end]);
+  }
 
   function success (pos) {
     const { latitude, longitude } = pos.coords;
@@ -133,6 +150,24 @@ function Map(props) {
     }
   }
 
+  function distance(lat1, lon1, lat2, lon2) {
+    // Convert coordinates from degrees to radians
+    const toRadians = (angle) => angle * (Math.PI / 180);
+    const φ1 = toRadians(lat1);
+    const φ2 = toRadians(lat2);
+    const Δφ = toRadians(lat2 - lat1);
+    const Δλ = toRadians(lon2 - lon1);
+    // Radius of the Earth (in kilometers)
+    const radius = 6371;
+    // Apply Haversine formula
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = radius * c;
+    return distance.toFixed(2);
+  }
+
   return (
     <div style={{position: 'relative'}}> 
       {position.length > 0 && (
@@ -157,6 +192,7 @@ function Map(props) {
 	  <Popup autoOpen position={ position[0] }>You are here</Popup>
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
+	{props.start && <CustomTooltip content=`Distance remaining: ${distanceRemaining} kms` position="top"></CustomTooltip>}
 	{position.length > 1 && <RoutingMachine start={position[0]} end={position[1]}/>}
 	<MapClickHandler />
       </MapContainer>

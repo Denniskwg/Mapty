@@ -9,6 +9,7 @@ function UserView(props) {
   const [create, setCreate] = useState(false);
   const [position, setPosition] = useState([]);
   const [workouts, setWorkouts] = useState([]);
+  const [start, setStart] = useState(false);
 
   useEffect(()=>{
     fetchData();
@@ -43,8 +44,8 @@ function UserView(props) {
   return (
     <div className="custom-container">
       <NavBar/>
-      <Map workouts={workouts} id={props.id} create={create} position={position}/>
-      <DashBoard workouts={workouts} click={handleClick} weight={weight} speed={speed} log={props.log} create={setCreate} setId={setId} setPosition={setPosition}/>
+      <Map start={start} workouts={workouts} id={props.id} create={create} position={position}/>
+      <DashBoard setStart={setStart} workouts={workouts} click={handleClick} weight={weight} speed={speed} log={props.log} create={setCreate} setId={setId} setPosition={setPosition}/>
     </div>
   );
 }

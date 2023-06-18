@@ -11,7 +11,7 @@ function Running(props) {
       <p style={{'margin': '0'}}><b>{props.distance} km</b></p>
       <div className="div-3"><p style={{'margin': '0'}}><b>Calorie loss:</b></p><span className="calories">{props.calories} cal</span></div>
       {props.mode && <div className="div-3"><p><b>date: </b></p><span className="calories">{props.date}</span></div>}
-      <button style={{backgroundColor: props.type === 'running' ? '#00c46a' :  '#ffb545', border: 'none'}}type="submit" className="btn btn-primary">start</button>
+      <button onClick={()=>props.setStart(true)} style={{backgroundColor: props.type === 'running' ? '#00c46a' :  '#ffb545', border: 'none'}}type="submit" className="btn btn-primary">start</button>
     </Row>
   );
 };
@@ -76,7 +76,7 @@ function DashBoard (props) {
       <ul className="routes list-group">
 	{props.workouts.map((item, index) => {
 	  return (
-	  <li key={item.id} className="route-item"><Running date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1])} calories={calculateCalories(props.weight, props.speed, distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1]))} style={style} type={item.type}/></li>
+	  <li key={item.id} className="route-item"><Running setStart={props.setStart} date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1])} calories={calculateCalories(props.weight, props.speed, distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1]))} style={style} type={item.type}/></li>
 	  );
 	})}
       </ul>
