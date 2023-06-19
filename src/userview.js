@@ -19,7 +19,7 @@ function UserView(props) {
     try {
       const id = localStorage.getItem('id');
       console.log(id);
-      const response = await fetch(`https://mapty.denniswaruhiu.tech/v1/user_workouts/${JSON.parse(id)}/`);
+      const response = await fetch(`https://api.denniswaruhiu.tech/v1/user_workouts/${JSON.parse(id)}/`);
       const jsonData = await response.json();
       setWorkouts(jsonData);
     } catch (error) {
@@ -28,7 +28,6 @@ function UserView(props) {
   };
 
   function handleClick(e) {
-    if (e.currentTarget.getAttribute('data-id')) {
     const id = e.currentTarget.getAttribute('data-id');
     console.log(id);
     setId(id);
@@ -37,7 +36,6 @@ function UserView(props) {
     const start = item.coords_start;
     const end = item.coords_end;
     setPosition([start, end]);
-    }
   }
 
   const weight = JSON.parse(localStorage.getItem('weight'));

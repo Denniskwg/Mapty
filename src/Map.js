@@ -36,7 +36,6 @@ function Map(props) {
 	      });
 
   const [showForm, setShowForm] = useState(false);
-  const [distanceRemaining, setDistanceRemaining] = useState(0);
 
   function handleChange(e) {
     const { id, value } = e.target;
@@ -50,25 +49,32 @@ function Map(props) {
     if (navigator.geolocation && props.create){
       navigator.geolocation.getCurrentPosition(success, error);
     }
-    setPosition(props.position);
-    if (navigator.geolocation && props.start) {
-      setInterval (()=>{
-        navigator.geolocation.getCurrentPosition(success2, error);
-	const start = position[0];
-	const end = position[1];
-	const dist = distance(start[0], start[1], end[0], end[1]);
-	setDistanceRemaining(dist);
-      }, 1000);
-    }
-    setMapKey((prevKey) => prevKey + 1);
-  }, [props.position, props.create, props.start, position]);
+    let watchId;
 
-  function success2 (pos) {
-    const { latitude, longitude } = pos.coords;
-    const start = [latitude, longitude];
-    const end = position[1];
-    setPosition([start, end]);
-  }
+    setPosition(props.position);
+    if (props.start) {
+      watchId = setInterval(() => {
+	navigator.geolocation.getCurrentPosition(
+	  (pos) => {
+	    const { latitude, longitude } = pos.coords;
+	    const updatedStart = [latitude, longitude];
+	    const end = position[1];
+	    setPosition([updatedStart, end]);
+	  },
+	  (error) => {
+	    console.log(error);
+	  }
+	);
+      }, 5000);
+    }
+
+    setMapKey((prevKey) => prevKey + 1);
+
+    return () => {
+      clearInterval(watchId);
+    };
+  }, [props.position, props.start]);
+
 
   function success (pos) {
     const { latitude, longitude } = pos.coords;
@@ -135,7 +141,7 @@ function Map(props) {
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
       const id = JSON.parse(localStorage.getItem('id'));
-      const response = await axios.post("https://mapty.denniswaruhiu.tech/v1/workouts/", {
+      const response = await axios.post("https://api.denniswaruhiu.tech/v1/workouts/", {
         name: formData.name,
 	type: formData.type,
 	coords_start: position[0],
@@ -168,6 +174,7 @@ function Map(props) {
     return distance.toFixed(2);
   }
 
+
   return (
     <div style={{position: 'relative'}}> 
       {position.length > 0 && (
@@ -192,7 +199,7 @@ function Map(props) {
 	  <Popup autoOpen position={ position[0] }>You are here</Popup>
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
-	{props.start && <CustomTooltip content=`Distance remaining: ${distanceRemaining} kms` position="top"></CustomTooltip>}
+	{props.start && !props.create && <CustomTooltip content={`Distance remaining ${distance(position[0][0], position[0][1], position[1][0], position[1][1])} kms`} position="top"></CustomTooltip>}
 	{position.length > 1 && <RoutingMachine start={position[0]} end={position[1]}/>}
 	<MapClickHandler />
       </MapContainer>

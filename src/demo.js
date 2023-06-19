@@ -26,7 +26,7 @@ function Demo(props) {
 
   const fetchDemoData = async () => {
     try {
-      const response = await fetch(`https://mapty.denniswaruhiu.tech/v1/demo_workouts/${type}/`);
+      const response = await fetch(`https://api.denniswaruhiu.tech/v1/demo_workouts/${type}/`);
       const jsonData = await response.json();
       setWorkouts(jsonData);
     } catch (error) {
