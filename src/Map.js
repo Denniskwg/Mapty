@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import markerIconPng from "./images/marker-icon.png";
@@ -50,12 +50,9 @@ function Map(props) {
       navigator.geolocation.getCurrentPosition(success, error);
     }
     let watchId;
-
     setPosition(props.position);
-    if (props.start) {
+    if (props.start && navigator.geolocation) {
       //start watching current position
-      console.log(position);
-      console.log(props.position);
       watchId = setInterval(() => {
 	navigator.geolocation.getCurrentPosition(
 	  (pos) => {
@@ -154,6 +151,7 @@ function Map(props) {
 	});
 
       console.log(response.data);
+      props.fetch();
     } catch (error){
       console.error(error);
     }
@@ -203,7 +201,7 @@ function Map(props) {
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
 	{props.start && !props.create && <CustomTooltip content={`Distance remaining ${distance(position[0][0], position[0][1], position[1][0], position[1][1])} kms`} position="top"></CustomTooltip>}
-	{position.length > 1 && <RoutingMachineWrapper start={position[0]} end={position[1]} />}
+	{position.length > 1 && <RoutingMachine start={position[0]} end={position[1]} />}
 	<MapClickHandler />
       </MapContainer>
       </div>
@@ -221,9 +219,6 @@ function CustomTooltip({ content, position }) {
 );
 };
 
-const RoutingMachineWrapper = React.memo(({ start, end }) => {
-  return <RoutingMachine start={start} end={end} />;
-});
 
 
 export default Map;

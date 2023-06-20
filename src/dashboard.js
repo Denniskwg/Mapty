@@ -80,7 +80,7 @@ function DashBoard (props) {
       <ul className="routes list-group">
 	{props.workouts.map((item, index) => {
 	  return (
-	  <li key={item.id} className="route-item"><Running setStart={props.setStart} date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1])} calories={calculateCalories(props.weight, props.speed, distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1]))} style={style} type={item.type}/></li>
+	  <li key={item.id} className="route-item list-group-item"><Running setStart={props.setStart} date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1])} calories={calculateCalories(props.weight, props.speed, distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1]))} style={style} type={item.type}/></li>
 	  );
 	})}
       </ul>

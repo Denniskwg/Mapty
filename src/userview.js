@@ -47,7 +47,7 @@ function UserView(props) {
   return (
     <div className="custom-container">
       <NavBar/>
-      <Map start={start} workouts={workouts} id={props.id} create={create} position={position}/>
+      <Map start={start} workouts={workouts} id={props.id} create={create} position={position} fetch={fetchData}/>
       <DashBoard setStart={setStart} workouts={workouts} click={handleClick} weight={weight} speed={speed} log={props.log} create={setCreate} setId={setId} setPosition={setPosition}/>
     </div>
   );
