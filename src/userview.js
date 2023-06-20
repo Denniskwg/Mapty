@@ -32,6 +32,7 @@ function UserView(props) {
     console.log(id);
     setId(id);
     setCreate(false);
+    setStart(false);
     const item = workouts.find(item=>item.id === id);
     const start = item.coords_start;
     const end = item.coords_end;
