@@ -20,28 +20,45 @@ function Running(props) {
   );
 };
 
+
+const distance = async (lat1, lon1, lat2, lon2, type) => {
+	    const token = 'pk.eyJ1IjoiZGVubmlza3ciLCJhIjoiY2xoYnJiNjRqMDY3cDNtcDd5emQwdjY3ciJ9.UxYOlMmkZoYF3FzxiPSKoA';
+	    try {
+	      const response = await fetch(`https://api.mapbox.com/directions/v5/mapbox/${type === 'cycling' ? 'cycling' : 'walking'}/${lon1},${lat1};${lon2},${lat2}?annotations=distance&access_token=${token}`);
+	      const data = await response.json();
+	      // Extract the distance from the API response
+	      const distance = data.routes[0].distance;
+	      const distanceKms = distance / 1000;
+	      console.log('Distance:', distance);
+	      return distanceKms.toFixed(2);
+	    } catch (error) {
+              console.error('Error:', error);
+	    }
+}
+
 function DashBoard (props) {
+  const [workouts, setWorkouts] = useState([]);
 
-  function distance(lat1, lon1, lat2, lon2) {
-	    // Convert coordinates from degrees to radians
-    const toRadians = (angle) => angle * (Math.PI / 180);
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δφ = toRadians(lat2 - lat1);
-    const Δλ = toRadians(lon2 - lon1);
-	  // Radius of the Earth (in kilometers)
-    const radius = 6371;
+  useEffect(()=>{
+    const calculateDistances = async () => {
+      const newWorkouts = await Promise.all(
+	props.workouts.map(async (item) => {
+	  const dist = await distance(
+	    item.coords_start[0],
+	    item.coords_start[1],
+	    item.coords_end[0],
+	    item.coords_end[1],
+	    item.type
+	  );
+	  item.distance = dist;
+	  return item;
+	})
+      );
+      setWorkouts(newWorkouts);
+    };
 
-	  // Apply Haversine formula
-    const a =
-      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = radius * c;
-
-    return distance.toFixed(2);
-  }
-
+    calculateDistances();
+  }, [props.workouts]);
 
   function calculateCalories(weight, speed, distance) {
     // Convert speed from km/h to m/s
@@ -71,6 +88,8 @@ function DashBoard (props) {
     props.create(true);
     props.setPosition([]);
   }
+
+
   const style = {cycling: '5px solid #ffb545', running: '5px solid #00c46a'}
   const mode = JSON.parse(localStorage.getItem('user_mode'));
   return (
@@ -78,9 +97,9 @@ function DashBoard (props) {
     {mode ?<div style={{display: 'flex', flexDirection:'column', gap: '1rem'}}><button onClick={handleClickButton} className="btn btn-primary">Create New Route</button><h5>Your Routes</h5></div> : <p></p>}
     {props.workouts.length === 0 ? <div>No {props.option} routes</div> : (
       <ul className="routes list-group">
-	{props.workouts.map((item, index) => {
+	{workouts.map((item, index) => {
 	  return (
-	  <li key={item.id} className="route-item list-group-item"><Running setStart={props.setStart} date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1])} calories={calculateCalories(props.weight, props.speed, distance(item.coords_start[0], item.coords_start[1], item.coords_end[0], item.coords_end[1]))} style={style} type={item.type}/></li>
+	  <li key={item.id} className="route-item list-group-item"><Running setStart={props.setStart} date={item.date} mode={mode} name={item.name} click={props.click} id={item.id} distance={item.distance} calories={calculateCalories(props.weight, props.speed, item.distance)} style={style} type={item.type}/></li>
 	  );
 	})}
       </ul>
