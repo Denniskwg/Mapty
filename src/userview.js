@@ -32,11 +32,13 @@ function UserView(props) {
     console.log(id);
     setId(id);
     setCreate(false);
-    setStart(false);
+    if (start) {
+      setStart(false);
+    }
     const item = workouts.find(item=>item.id === id);
-    const start = item.coords_start;
-    const end = item.coords_end;
-    setPosition([start, end]);
+    const startpos = item.coords_start;
+    const endpos = item.coords_end;
+    setPosition([startpos, endpos]);
   }
 
   const weight = JSON.parse(localStorage.getItem('weight'));

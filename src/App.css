@@ -126,7 +126,8 @@
 	display: flex;
 	align-items: baseline;
 	box-sizing: border-box;
-	margin: 0;
+	margin-left: 0;
+	margin-right: 0;
 }
 .workout--cycling {
 	border-left: 5px solid var(--color-brand--1);

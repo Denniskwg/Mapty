@@ -203,7 +203,7 @@ function Map(props) {
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
 	{props.start && !props.create && <CustomTooltip content={`Distance remaining ${distance(position[0][0], position[0][1], position[1][0], position[1][1])} kms`} position="top"></CustomTooltip>}
-	{position.length > 1 && <RoutingMachine start={position[0]} end={position[1]}/>}
+	{position.length > 1 && <RoutingMachineWrapper start={position[0]} end={position[1]} />}
 	<MapClickHandler />
       </MapContainer>
       </div>
@@ -220,5 +220,10 @@ function CustomTooltip({ content, position }) {
     </div>
 );
 };
+
+const RoutingMachineWrapper = React.memo(({ start, end }) => {
+  return <RoutingMachine start={start} end={end} />;
+});
+
 
 export default Map;
