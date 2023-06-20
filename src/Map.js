@@ -53,6 +53,9 @@ function Map(props) {
 
     setPosition(props.position);
     if (props.start) {
+      //start watching current position
+      console.log(position);
+      console.log(props.position);
       watchId = setInterval(() => {
 	navigator.geolocation.getCurrentPosition(
 	  (pos) => {
@@ -67,7 +70,7 @@ function Map(props) {
 	);
       }, 5000);
     }
-
+    //helps reload new map instance on change of state
     setMapKey((prevKey) => prevKey + 1);
 
     return () => {
