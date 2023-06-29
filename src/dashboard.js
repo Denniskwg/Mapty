@@ -29,7 +29,6 @@ const distance = async (lat1, lon1, lat2, lon2, type) => {
 	      // Extract the distance from the API response
 	      const distance = data.routes[0].distance;
 	      const distanceKms = distance / 1000;
-	      console.log('Distance:', distance);
 	      return distanceKms.toFixed(2);
 	    } catch (error) {
               console.error('Error:', error);

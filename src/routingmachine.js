@@ -1,5 +1,5 @@
 import L from "leaflet";
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
@@ -32,17 +32,30 @@ const createRoutineMachineLayer = (props) => {
 		showAlternatives: false
 	})
 
-	if (props.reRoute) {
-	  instance.setWaypoints([
-	    L.latLng(props.start[0], props.start[1]),
-            L.latLng(props.end[0], props.end[1])
-	  ]);
-	}
-
-
 	return instance;
 };
 
 const RoutingMachine = createControlComponent(createRoutineMachineLayer);
 
-export default RoutingMachine;
+
+function Router(props) {
+  const [position, setPosition] = useState([]);
+  const routeRef = useRef(null);
+
+  useEffect(() => {
+    setPosition([props.start, props.end]);
+    if (routeRef.current) {
+      routeRef.current.setWaypoints([
+        L.latLng(props.start[0], props.start[1]),
+        L.latLng(props.end[0], props.end[1])
+      ]);
+    }
+  }, [props.start, props.end]);
+
+  return (
+    <>
+      {position.length === 2 && <RoutingMachine ref={routeRef} start={position[0]} end={position[1]}/>}
+    </>
+  );
+};
+export default Router;

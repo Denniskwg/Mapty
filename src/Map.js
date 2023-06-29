@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import markerIconPng from "./images/marker-icon.png";
-import RoutingMachine from './routingmachine';
+import Router from './routingmachine';
 import axios from 'axios';
 import UserForm from './userform';
 
@@ -165,7 +165,7 @@ function Map(props) {
     <div style={{position: 'relative'}}> 
       {position.length > 0 && (
       <div style={{position: 'relative'}}>
-      <MapContainer key={mapKey} center={position[0]} zoom={15} style={{ height: '50vh', width: '100%' }} whenReady={()=>{
+      <MapContainer key={mapKey} ref={mapRef} center={position[0]} zoom={15} style={{ height: '50vh', width: '100%' }} whenReady={()=>{
 	setTimeout(()=>{
           if (props.create) {
 	    marker.current.openPopup();
@@ -186,7 +186,7 @@ function Map(props) {
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
 	{props.start && !props.create && <CustomTooltip content={`${props.name} Distance remaining ${distance} kms`} position="top"></CustomTooltip>}
-	{position.length > 1 && <RoutingMachine start={position[0]} end={position[1]} reRoute={props.start}/>}
+	{position.length > 1 && <Router start={position[0]} end={position[1]} map={mapRef}/>}
 	<MapClickHandler />
       </MapContainer>
       </div>
