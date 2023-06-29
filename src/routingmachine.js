@@ -1,18 +1,20 @@
 import L from "leaflet";
+import React, { useEffect, useRef } from 'react';
 import { createControlComponent } from "@react-leaflet/core";
 import "leaflet-routing-machine";
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import markerIconUrl from "./images/marker-icon.png";
 
 let DefaultIcon = L.icon({
-  iconUrl: markerIconUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
+	iconUrl: markerIconUrl,
+	iconSize: [25, 41],
+	iconAnchor: [12, 41],
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const createRoutineMachineLayer = (props) => {
+
 	const instance = L.Routing.control({
 		waypoints: [
 			L.latLng(props.start[0], props.start[1]),
@@ -29,6 +31,14 @@ const createRoutineMachineLayer = (props) => {
 		fitSelectedRoutes: true,
 		showAlternatives: false
 	})
+
+	if (props.reRoute) {
+	  instance.setWaypoints([
+	    L.latLng(props.start[0], props.start[1]),
+            L.latLng(props.end[0], props.end[1])
+	  ]);
+	}
+
 
 	return instance;
 };

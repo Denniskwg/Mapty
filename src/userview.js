@@ -10,6 +10,8 @@ function UserView(props) {
   const [position, setPosition] = useState([]);
   const [workouts, setWorkouts] = useState([]);
   const [start, setStart] = useState(false);
+  const [name, setName] = useState('');
+  const [type, setType] = useState('');
 
   useEffect(()=>{
     fetchData();
@@ -18,7 +20,6 @@ function UserView(props) {
   const fetchData = async () => {
     try {
       const id = localStorage.getItem('id');
-      console.log(id);
       const response = await fetch(`https://api.denniswaruhiu.tech/v1/user_workouts/${JSON.parse(id)}/`);
       const jsonData = await response.json();
       setWorkouts(jsonData);
@@ -29,16 +30,31 @@ function UserView(props) {
 
   function handleClick(e) {
     const id = e.currentTarget.getAttribute('data-id');
-    console.log(id);
     setId(id);
     setCreate(false);
     if (start) {
       setStart(false);
     }
     const item = workouts.find(item=>item.id === id);
+    setName(item.name);
+    setType(item.type);
     const startpos = item.coords_start;
     const endpos = item.coords_end;
     setPosition([startpos, endpos]);
+  }
+
+  const distance = async (lat1, lon1, lat2, lon2, type) => {
+    const token = 'pk.eyJ1IjoiZGVubmlza3ciLCJhIjoiY2xoYnJiNjRqMDY3cDNtcDd5emQwdjY3ciJ9.UxYOlMmkZoYF3FzxiPSKoA';
+    try {
+      const response = await fetch(`https://api.mapbox.com/directions/v5/mapbox/${type === 'cycling' ? 'cycling' : 'walking'}/${lon1},${lat1};${lon2},${lat2}?annotations=distance&access_token=${token}`);
+      const data = await response.json();
+      // Extract the distance from the API response
+      const distance = data.routes[0].distance;
+      const distanceKms = distance / 1000;
+      return distanceKms.toFixed(2);
+      } catch (error) {
+        console.error('Error:', error);
+      }
   }
 
   const weight = JSON.parse(localStorage.getItem('weight'));
@@ -47,7 +63,7 @@ function UserView(props) {
   return (
     <div className="custom-container">
       <NavBar/>
-      <Map start={start} workouts={workouts} id={props.id} create={create} position={position} fetch={fetchData}/>
+      <Map start={start} workouts={workouts} id={props.id} create={create} position={position} fetch={fetchData} name={name} distance={distance} type={type}/>
       <DashBoard setStart={setStart} workouts={workouts} click={handleClick} weight={weight} speed={speed} log={props.log} create={setCreate} setId={setId} setPosition={setPosition}/>
     </div>
   );

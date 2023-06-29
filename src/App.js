@@ -57,6 +57,8 @@ function App() {
 
 
   const pathId = JSON.parse(localStorage.getItem('id'));
+  const storedSpeed = JSON.parse(localStorage.getItem('speed'));
+  const storedWeight = JSON.parse(localStorage.getItem('weight'));
 
   return (
       <BrowserRouter>
@@ -64,7 +66,7 @@ function App() {
 	  <Route path="/" element={<Home data={data} change={handleChange}/>} />
 	  <Route path="/login" element={<LoginForm logged={setLoggedIn} setId={setId} weight={weight} setWeight={setWeight} speed={speed} setSpeed={setSpeed}/>} />
 	  <Route path="/signup" element={<SignupForm/>} />
-	  <Route path="/map" element={<Demo workouts={demoWorkouts} weight={data.weight} speed={data.speed}/>} />
+	  <Route path="/map" element={<Demo workouts={demoWorkouts} weight={storedWeight} speed={storedSpeed}/>} />
 	  <Route path={`/user-${pathId}`} element={<UserView workouts={userWorkouts} speed={speed} log={loggedIn} weight={weight} id={id}/>} />
         </Routes>
       </BrowserRouter>
@@ -75,7 +77,7 @@ function Home(props) {
   return (
     <div className="custom-container">
       <NavBar/>
-      <Form weight={props.data.weight} speed={props.data.speed} option={props.data.type} change={props.change} fetch={props.fetch}/>
+      <Form weight={props.data.weight} speed={props.data.speed} option={props.data.type} change={props.change}/>
     </div>
   );
 }

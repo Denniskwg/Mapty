@@ -6,7 +6,7 @@ import L from 'leaflet';
 
 function Running(props) {
   function click() {
-    props.setStart(true)
+    props.setStart(true);
   }
 
   return (
@@ -41,6 +41,7 @@ function DashBoard (props) {
 
   useEffect(()=>{
     const calculateDistances = async () => {
+      //wait for all data to be obtained from api and add it to the new workout object
       const newWorkouts = await Promise.all(
 	props.workouts.map(async (item) => {
 	  const dist = await distance(

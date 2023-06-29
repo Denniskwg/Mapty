@@ -1,6 +1,4 @@
 import React , { useState, useEffect } from 'react';
-import Map from './Map';
-import DashBoard from './dashboard';
 import InputForm from './input_form';
 import { useNavigate } from 'react-router-dom';
 
