@@ -4,4 +4,5 @@ To create a route click on create route and click on the map to choose end desti
 on the routes list.
 Click on a route to load it on the map and click start to start your workout.
 visit the [website](https://mapty.denniswaruhiu.tech)
+## mapty-flowchart
 ![Flowchart](mapty-flowchart.drawio.png)
