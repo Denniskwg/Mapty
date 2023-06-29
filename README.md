@@ -1,3 +1,3 @@
 # Mapty
 
-![Flowchart](mapty/mapty-flowchart.drawio.png)
+![Flowchart](~/mapty/mapty-flowchart.drawio.png)
