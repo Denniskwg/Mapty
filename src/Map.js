@@ -29,12 +29,12 @@ function Map(props) {
   const [mapKey, setMapKey] = useState(0);
   const marker = useRef(null);
   const mapRef = useRef(null);
-   const [formData, setFormData] = useState({
-	        name: '',
-	        type: 'cycling',
-	        weight: '',
-	        speed: 8,
-	      });
+  const [formData, setFormData] = useState({
+    name: '',
+    type: 'cycling',
+    weight: '',
+    speed: 8,
+  });
 
   const [showForm, setShowForm] = useState(false);
   const [distance, setDistance] = useState(0);
@@ -48,10 +48,13 @@ function Map(props) {
   }
 
   useEffect(()=> {
+    let watchId;
     if (navigator.geolocation && props.create){
+      if (watchId) {
+        clearInterval(watchId);
+      }
       navigator.geolocation.getCurrentPosition(success, error);
     }
-    let watchId;
     setPosition(props.position);
     if (props.start && navigator.geolocation) {
       //start watching current position
@@ -77,7 +80,7 @@ function Map(props) {
     return () => {
       clearInterval(watchId);
     };
-  }, [props.position, props.start]);
+  }, [props.position, props.start, props.create]);
 
 
   function success (pos) {
@@ -186,7 +189,7 @@ function Map(props) {
 	</Marker>}
 	{props.create && visible && <CustomTooltip content="Click on the map to select location" position="top"></CustomTooltip>}
 	{props.start && !props.create && <CustomTooltip content={`${props.name} Distance remaining ${distance} kms`} position="top"></CustomTooltip>}
-	{position.length > 1 && <Router start={position[0]} end={position[1]} map={mapRef}/>}
+	{position.length > 1 && !props.create && <Router start={position[0]} end={position[1]}/>}
 	<MapClickHandler />
       </MapContainer>
       </div>

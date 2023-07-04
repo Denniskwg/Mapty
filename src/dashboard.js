@@ -86,6 +86,7 @@ function DashBoard (props) {
 
   function handleClickButton() {
     props.create(true);
+    props.setStart(false);
     props.setPosition([]);
   }
 
