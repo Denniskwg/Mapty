@@ -6,3 +6,6 @@ Click on a route to load it on the map and click start to start your workout.
 visit the [website](https://mapty.denniswaruhiu.tech)
 ## mapty-flowchart
 ![Flowchart](mapty-flowchart.drawio.png)
+To see how the app works clone the repository and run npm install. Execute the requirements.txt folder. 
+In one terminal start the api server using python3 manage.py runserver and in another start the react app using npm start. Create an account, login, and create some
+workout routes.

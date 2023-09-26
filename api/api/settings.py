@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-c-zmq^+62fj!846oc9cf#(*k)l^-=#4^2wa+ycqp=id5o^nd@k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['api.denniswaruhiu.tech']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 CSRF_COOKIE_SECURE = True
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'v1',
     'corsheaders',
-    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +60,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'https://mapty.denniswaruhiu.tech',
+        'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'api.urls'

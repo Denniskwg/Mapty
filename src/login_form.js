@@ -39,7 +39,7 @@ function LoginForm(props) {
 
   const login = async () => {
     try {
-      const response = await axios.post('https://api.denniswaruhiu.tech/v1/login/', {
+      const response = await axios.post('http://127.0.0.1:8000/v1/login/', {
         username,
 	password,
       });

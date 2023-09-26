@@ -148,7 +148,7 @@ function Map(props) {
       const day = String(date.getDate()).padStart(2, '0');
       const formattedDate = `${year}-${month}-${day}`;
       const id = JSON.parse(localStorage.getItem('id'));
-      const response = await axios.post("https://api.denniswaruhiu.tech/v1/workouts/", {
+      const response = await axios.post("http://127.0.0.1:8000/v1/workouts/", {
         name: formData.name,
 	type: formData.type,
 	coords_start: position[0],
