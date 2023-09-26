@@ -3,7 +3,6 @@ Mapty is a workout app that lets you create and track your running and cycling r
 To create a route click on create route and click on the map to choose end destination. Fill in the form and submit and a route will be created an appear
 on the routes list.
 Click on a route to load it on the map and click start to start your workout.
-visit the [website](https://mapty.denniswaruhiu.tech)
 ## mapty-flowchart
 ![Flowchart](mapty-flowchart.drawio.png)
 To see how the app works clone the repository and run npm install. Execute the requirements.txt folder. 
